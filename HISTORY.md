@@ -1,9 +1,53 @@
 # History
 
-# not yet published, version 8.0.2
+# not yet published, version 9.2.0
 
+- Implemented function `count` to count the total elements in a matrix, 
+  see #2085. Thanks @Josef37.
+- Fix #2096: cleanup old reference to external dependency `crypto`.
+- Some refactoring in the code to remove duplications, see #2093. 
+  Thanks @Josef37.
+
+
+# 2021-01-27, version 9.1.0
+
+- Extended function `reshape` with support for a wildcard `-1` to automatically
+  calculate the remaining size, like `reshape([1, 2, 3, 4, 5, 6], [-1, 2])` 
+  which will output `[[0, 1], [2, 3], [4, 5]]`. See #2075. Thanks @Josef37.
+- Fix #2087: function `simplify` ignores second argument of `log`, for example
+  in `simplify('log(e, 9)')` . Thanks @quentintruong.
+
+
+# 2021-01-16, version 9.0.0
+
+- Improved support for bin, hex, and oct literals. See #1996. Thanks @clnhlzmn.
+  - **Breaking change**: parse literals with prefixes `0b`, `0c`, and `0x` are  
+    now unsigned by default. To parse them as signed, you have to specify a
+    suffix specifying the word size such as `i16` or `i32`.
+  - Function `format` now supports more notations: `bin`, 'hex', and `oct`,
+    for example `format(255, {notation: "hex"})`.
+  - The functions `format`, `bin`, `hex`, `oct` now allow specifying a wordSize, 
+    like `bin(10, 32)` and `format(10, {notation: "bin", wordSize: 32})`.
+  - BigNumber support for the bin, hex, and oct literals. 
+- Extended and improved the example rocket_trajectory_optimization.html.
+  Thanks @Josef37.
+
+
+# 2020-12-30, version 8.1.1
+
+- Improved the performance of parsing and evaluating units a lot, see #2065. 
+  Thanks @flaviut.
+- Upgraded dependency `fraction.js` to `v4.0.13`. 
+- Moved continuous integration testing from Travis CI to Github Workflow, 
+  see #2024, #2041. Thanks @harrysarson.
+
+
+# 2020-12-04, version 8.1.0
+
+- Implemented units `kilogramforce` (`kgf`). Thanks @rnd-debug.
 - Fix #2026: Implement a new option `fractionsLimit` for function `simplify`, 
   defaulting to `Infinity`.
+- Improved the documentation of function `clone`. Thanks @redbar0n.
 
 
 # 2020-11-09, version 8.0.1

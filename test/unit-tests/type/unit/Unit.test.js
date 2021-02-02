@@ -926,6 +926,15 @@ describe('Unit', function () {
       const unit3 = math3.Unit.parse('5kg')
       assert(isBigNumber(unit3.value))
     })
+
+    it('should parse new units that override old units', function () {
+      const math2 = math.create()
+      const oldMm = math2.Unit.parse('mm')
+      const newMm = math2.createUnit('mm', '2 A')
+      assert.notDeepStrictEqual(oldMm, newMm)
+      assert.deepStrictEqual(newMm, math2.Unit.parse('mm'))
+      console.log(oldMm.units, newMm.units)
+    })
   })
 
   describe('prefixes', function () {
@@ -1045,6 +1054,8 @@ describe('Unit', function () {
 
       assert.strictEqual(math.evaluate('2 feet * 8 s').toString(), '16 feet s')
       assert.strictEqual(math.evaluate('2 s * 8 feet').toString(), '16 s feet')
+
+      assert.strictEqual(math.evaluate('2 N + 2 kgf').toString(), '21.6133 N')
     })
   })
 
@@ -1059,6 +1070,7 @@ describe('Unit', function () {
       assert.strictEqual(new Unit(1, 'Wb/A').equals(new Unit(1, 'H')), true)
       assert.strictEqual(new Unit(1, 'ohm^-1').equals(new Unit(1, 'S')), true)
       assert.strictEqual(new Unit(1, 'eV').equals(new Unit(1.602176565e-19, 'J')), true)
+      assert.strictEqual(new Unit(1, 'kilogramforce').equals(new Unit(1, 'kgf')), true)
     })
 
     it("For each built-in unit, 'name' should match key", function () {
@@ -1249,6 +1261,7 @@ describe('Unit', function () {
     it('should return the unit in SI units', function () {
       assert.strictEqual(Unit.parse('3 ft').toSI().format(10), '0.9144 m')
       assert.strictEqual(Unit.parse('0.111 ft^2').toSI().format(10), '0.01031223744 m^2')
+      assert.strictEqual(Unit.parse('1 kgf').toSI().toString(), '9.80665 (kg m) / s^2')
     })
 
     it('should return SI units for valueless units', function () {
